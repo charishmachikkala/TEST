@@ -1,0 +1,145 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang16393{\fonttbl{\f0\fnil\fcharset0 Cambria;}{\f1\fnil Cambria;}{\f2\fnil\fcharset1 Cambria Math;}{\f3\fnil\fcharset0 Cambria Math;}{\f4\fnil\fcharset2 Symbol;}}
+{\colortbl ;\red255\green0\blue0;\red24\green5\blue101;\red0\green0\blue0;}
+{\*\generator Riched20 10.0.10240}{\*\mmathPr\mmathFont2\mwrapIndent1440 }\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\qj\b\f0\fs36\lang9 1.What makes NumPy.shape() different from  NumPy.size()?\b0\par
+I noticed that some numpy operations take an argument called \cf1\b shape\cf0\b0 , such as \cf1\b np.zeros\cf0\b0 , whereas some others take an argument called \cf2\b size\cf0\b0 , such as \cf2\b np.random.randint\cf0\b0 . To me, those arguments have the same function and the fact that they have different names is a bit confusing. Actually, size seems a bit off since it really specifies the shape of the output. Shape (in the numpy context) seems to me the better option for an argument name. The actual relation between the two is \b size = np.prod(shape) \b0 so the distinction should indeed be a bit more obvious in the arguments names. \f1  \par
+\f0\lang16393           Randint uses the size parameter name, but uses shape in the explanation.Shape relates to the size of the dimensions of an N-dimensional array. Size regarding arrays, relates to the amount (or count) of elements that are contained in the array (or sometimes, at the top dimension of the array - when used as length).\par
+
+\pard\sa200\sl276\slmult1 For example, let a be a matrix\par
+1  2  3  4\par
+5  6  7  8\par
+9 10 11 12\par
+the shape of a is (3, 4).\par
+the size of a is 12 .\par
+the size of a[1] is 4.\par
+\b 2. In NumPy, describe the idea of broadcasting?\par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b0 The term broadcasting refers to the ability of NumPy to treat arrays of different shapes during arithmetic operations. Arithmetic operations on arrays are usually done on corresponding elements. If two arrays are of exactly the same shape, then these operations are smoothly performed.\par
+{\pntext\f4\'B7\tab}Example 1\par
+
+\pard\sa200\sl276\slmult1          a = np.array([1,2,3,4]) \par
+         b = np.array([10,20,30,40]) \par
+         c = a * b \par
+         print c\par
+         Its output is as follows \f2\u8722?\f0  [10   40   90   160].\par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 If\f3  \f0 the\f3  \f0 dimensions\f3  \f0 of\f3  \f0 two\f3  \f0 arrays\f3  \f0 are\f3  \f0 dissimilar\f3 , \f0 element\f3 -\f0 to\f3 -\f0 element\f3  \f0 operations\f3  \f0 are\f3  \f0 not\f3  \f0 possible\f3 . \f0 However\f3 , \f0 operations\f3  \f0 on\f3  \f0 arrays\f3  \f0 of\f3  \f0 non\f3 -\f0 similar\f3  \f0 shapes\f3  \f0 is\f3  \f0 still\f3  \f0 possible\f3  \f0 in\f3  \f0 NumPy\f3 , \f0 because\f3  \f0 of\f3  \f0 the\f3  \f0 broadcasting\f3  \f0 capability\f3 . \f0 The\f3  \f0 smaller\f3  \f0 array\f3  \f0 is\f3  \f0 broadcast\f3  \f0 to\f3  \f0 the\f3  \f0 size\f3  \f0 of\f3  \f0 the\f3  \f0 larger\f3  \f0 array\f3  \f0 so\f3  \f0 that\f3  \f0 they\f3  \f0 have\f3  \f0 compatible\f3  \f0 shapes\f3 .\f0  Broadcasting\f3  \f0 is\f3  \f0 possible\f3  \f0 if\f3  \f0 the\f3  \f0 following\f3  \f0 rules\f3  \f0 are\f3  \f0 satisfied\f3 .\f0  Array\f3  \f0 with\f3  \f0 smaller\f3  \f0 ndim\f3  \f0 than\f3  \f0 the\f3  \f0 other\f3  \f0 is\f3  \f0 prepended\f3  \f0 with\f3  \f0 '1'\f3  \f0 in\f3  \f0 its\f3  \f0 shape\f3 .\f0  Size\f3  \f0 in\f3  \f0 each\f3  \f0 dimension\f3  \f0 of\f3  \f0 the\f3  \f0 output\f3  \f0 shape\f3  \f0 is\f3  \f0 maximum\f3  \f0 of\f3  \f0 the\f3  \f0 input\f3  \f0 sizes\f3  \f0 in\f3  \f0 that\f3  \f0 dimension\f3 .\f0  An\f3  \f0 input\f3  \f0 can\f3  \f0 be\f3  \f0 used\f3  \f0 in\f3  \f0 calculation\f3 , \f0 if\f3  \f0 its\f3  \f0 size\f3  \f0 in\f3  \f0 a\f3  \f0 particular\f3  \f0 dimension\f3  \f0 matches\f3  \f0 the\f3  \f0 output\f3  \f0 size\f3  \f0 or\f3  \f0 its\f3  \f0 value\f3  \f0 is\f3  \f0 exactly\f3  \f0 1\f3 . \f0 If\f3  \f0 an\f3  \f0 input\f3  \f0 has\f3  \f0 a\f3  \f0 dimension\f3  \f0 size\f3  \f0 of\f3  \f0 1\f3 , \f0 the\f3  \f0 first\f3  \f0 data\f3  \f0 entry\f3  \f0 in\f3  \f0 that\f3  \f0 dimension\f3  \f0 is\f3  \f0 used\f3  \f0 for\f3  \f0 all\f3  \f0 calculations\f3  \f0 along\f3  \f0 that\f3  \f0 dimension\f3 .\f0\lang16393\par
+
+\pard\sa200\sl276\slmult1\b\f3 3. What makes Python better than other libraries for numerical computation?\par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b0 One of the key features of Python is its numerous libraries and packages. In this article, we will list down the popular packages and libraries in Python that are being widely used for numeric and scientific applications.\par
+
+\pard\sa200\sl276\slmult1\cf1 1| SciPy (Scientific Numeric Library)\cf0\par
+Officially released in 2000-01, SciPy is free and open source library used for scientific computing and technical computing. The library consists of modules for optimisation,image processing, FFT, special functions and signal processing.\par
+The SciPy package includes algorithms and functions which are the crux of Python scientific computing capabilities. The sub-package includes: \par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b io\b0 : used for the standard input and output\par
+{\pntext\f4\'B7\tab}\b lib\b0 : this function is used to wrap python external libraries\par
+{\pntext\f4\'B7\tab}\b signal\b0 : used for processing signal tools\par
+{\pntext\f4\'B7\tab}\b sparse\b0 : used for algorithms related to sparse matrix\par
+{\pntext\f4\'B7\tab}\b spatial\b0 : widely used to determine paths in KD-trees, nearest neighbor and distance functions.\par
+{\pntext\f4\'B7\tab}\b optimise\b0 : used to optimise algorithms which include linear programming.\par
+{\pntext\f4\'B7\tab}\b linals\b0 : used for the regular linear algebra applications.\par
+{\pntext\f4\'B7\tab}\b interpolate\b0 : used for the integration of tools\par
+{\pntext\f4\'B7\tab}\b intergate\b0 : applied for integration of numerical tools\par
+{\pntext\f4\'B7\tab}\b fftpack\b0 : this subpackage helps for the discretion Fourier to transform algorithms\par
+{\pntext\f4\'B7\tab}\b cluster\b0 : the package consists of hierarchical clustering, vector quantisation, and K-means.\par
+{\pntext\f4\'B7\tab}\b misc\b0 : used for the miscellaneous utility applications.\par
+{\pntext\f4\'B7\tab}\b special\b0 : used to switch in special functions.\par
+{\pntext\f4\'B7\tab}\b weave\b0 : a tool to convert C/C++ codes to python programming.\par
+{\pntext\f4\'B7\tab}\b ndimage\b0 : used for wide range of functions in multi-dimensional image processing.\par
+{\pntext\f4\'B7\tab}\b stats\b0 : used for better understanding and analysing of statistical functions.\par
+{\pntext\f4\'B7\tab}\b constants\b0 : this algorithm includes physical specification and conversion components.\par
+
+\pard\sa200\sl276\slmult1\cf1 2| Pandas (Data Analytics Library)\par
+\cf0 Pandas is the most important data analysis library of Python. Being open source, it is used for analysing data with Python. It can take data formats of CSV or TSV files, or a SQL database and convert it into Python data frames with rows and columns which is similar to tables in statistical formats. The package makes comparisons with dictionaries with the aid of \lquote for\rquote  loops which are very easy to understand and operate.\par
+  Import pandas as pd (importing pandas library to memory), it is highly suggested to import the library as pd because next time when we want to use the application we need not mention the package full name instead we can name as pd, this avoids confusion.\par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 pd.read_filetype() (to open the desired file)\par
+{\pntext\f4\'B7\tab}pd.DataFrame() (to convert a specified python object)\par
+{\pntext\f4\'B7\tab}df.to_filetype (filename) (to save a data frame you are currently working with)\par
+{\pntext\f4\'B7\tab}The advantage of using Pandas is that it can perform a bunch of functions on the tables we have created. The following are some functions that can be performed on selected data frames.\par
+{\pntext\f4\'B7\tab} \b df.median()\b0 -to get the median of each column\par
+{\pntext\f4\'B7\tab}\b df.mean()-\b0 to get the mean of all columns\par
+{\pntext\f4\'B7\tab}\b df.max()-\b0 to get the highest value of a column\par
+{\pntext\f4\'B7\tab}\b df.min()-\b0 to get the minimum value of a column\par
+{\pntext\f4\'B7\tab}\b df.std()-\b0 to get the standard deviation of each column.\par
+{\pntext\f4\'B7\tab}\b df.corr()-\b0 to specify the relationship between columns of a data frame.\par
+{\pntext\f4\'B7\tab}\b df.count()-\b0 to get the number of non-null values in each column of the data frame.\par
+
+\pard\sa200\sl276\slmult1\cf1 3| IPython (Command Shell)\par
+\cf0 Developed by Fernando Perez in the year 2001, IPython is a command shell which is designed for interactive calculation in various programming languages. It offers self-examination, rich media, shell syntax, tab completion, and history.\par
+IPython is a browser-based notebook interface which supports code, text, mathematical expressions, inline plots and various media for interactive data visualisation with the use of GUI (Graphic User Interface) toolkits for flexible and rectifiable interpreters to load into one\rquote s own projects.\par
+IPython architecture contributes to parallel and distributed computing. It facilitates for the enhanced parallel applications of various styles of parallelism such as:\par
+Customer user defined prototypes\par
+Task Parallelism\par
+Data Parallelism\par
+Message cursory using M.P.I (Message Passing Interface)\par
+Multiple programs, multiple data (MIMD) parallelism\par
+A single program, multiple data (SPMD) parallelism\par
+\cf1 4| Numeric Python (Fundamental Numeric Package)\par
+\cf0 Better known as Numpy, numeric Python has developed a module for Python, mostly written in C.  Numpy guarantees swift execution as it is accumulated with mathematical and numerical functions.\par
+Robust Python with its dynamic data structures, efficient implementation of multi-dimensional arrays and matrices, Numpy assures accurate calculations with matrices and arrays.\par
+We need to import Numpy into memory to perform numerical operations.\par
+Import numpy as np (to import Numpy into memory)\par
+A_values=[20,30,40,50] (defining a list)\par
+A=np.array(A_values) (to convert list into one dimensional numpy array)\par
+print(A) (to get one dimensional array displayed)\par
+print(A*9/5 +32) (to turn values in the list into degrees fahrenheit)\par
+\cf1 5| Natural Language Toolkit (Library For Mathematical And Text Analysis)\par
+\cf0 Simply known as NLP, Natural Language Processing library is used to build applications and services that can understand and analyse human languages and data. One of the sub-libraries which are widely used in NLP is NLTK (Natural Language Toolkit). It has an active discussion forum through which they give hands-on guidance on programming basic topics such as computational linguistics, comprehensive API documentation, linguistics to engineers, students, industries and researchers. NLTK is an open source free community-driven project which is accessible for operating systems such as Windows, MAC OS X, and Linux. The implementations of NLP are:\par
+ Search engines (eg: Yahoo, Google, firefox etc) they use NLP to optimise the search results for users.\par
+Social websites like Facebook, Twitter use NLP for the news feed. The NLP algorithms understand the interests of the users and show related posts.\par
+\b Spam filters: \b0 unlike the traditional spam filters, the NLP has driven spam filters to understand what the mail is about and decides whether it is a spam or not.\par
+NLP includes well known and advanced sub-libraries which are very effective in mathematical calculations.\par
+  NLTK, which handles text analysis and related problems. Having over 50 corpora and lexicons, 9 stemmers and handful of algorithms NLTK is very popular for education and research. The    application involves a deep learning and analysing process which makes it one of the tough libraries in NLP\par
+TextBlob, which is a simple library for text analysis\par
+Stanford core NLP, a library that includes entity recognition, pattern understanding, parsing, tagging etc.\par
+SpaCy, which presents the best algorithm for the purpose\par
+Gensim, which is used for topic prototypes and document similarity analysis.\par
+\b 4.How does NumPy deal with files?\par
+\b0\f0 The ndarray objects can be saved to and loaded from the disk files. The IO functions available are load() and save() functions handle /numPy binary files (with npy extension)loadtxt() and savetxt() functions handle normal text files. NumPy introduces a simple file format for ndarray objects. This .npy file stores data, shape, dtype and other information required to reconstruct the ndarray in a disk file such that the array is correctly retrieved even if the file is on another machine with different architecture. numpy.save(). The numpy.save() file stores the input array in a disk file with npy extension.\par
+a = np.array([1,2,3,4,5]) \par
+np.save('outfile',a)\par
+To\f3  \f0 reconstruct\f3  \f0 array\f3  \f0 from\f3  \f0 outfile\f3 .\f0 npy\f3 , \f0 use\f3  \f0 load\f3 () \f0 function\f3 .\f0\par
+import\f3  \f0 numpy\f3  \f0 as\f3  \f0 np\f3  \f0\par
+b\f3  = \f0 np\f3 .\f0 load\f3 (\f0 'outfile\f3 .\f0 npy'\f3 ) \f0\par
+print\f3  \f0 b\f3  \f0\par
+It\f3  \f0 will\f3  \f0 produce\f3  \f0 the\f3  \f0 following\f3  \f0 output\f3  \f2\u8722?\par
+array([1, 2, 3, 4, 5])\par
+The save() and load() functions accept an additional Boolean parameter allow_pickles. A pickle in Python is used to serialize and de-serialize objects before saving to or reading from a disk file.\par
+\b savetxt()\b0\par
+The storage and retrieval of array data in simple text file format is done with savetxt() and loadtxt() functions.\par
+Example\par
+import numpy as np \par
+a = np.array([1,2,3,4,5]) \par
+np.savetxt('out.txt',a) \par
+b = np.loadtxt('out.txt') \par
+print b \par
+It will produce the following output \u8722?[ 1.  2.  3.  4.  5.]\par
+The savetxt() and loadtxt() functions accept additional optional parameters such as header, footer, and delimiter.\par
+\b\f3\lang16393 5.\f0  Mention the importance of NumPy.empty()?\par
+\b0 The NumPy empty() function is used to create an array of given shapes and types, without initializing values. To work with arrays, python provides a numpy empty array function. It is used to create an empty array as per user condition means given data type and shape of the array without initializing values. \par
+To\f3  \f0 work\f3  \f0 with\f3  \f0 arrays\f3 , \f0 python\f3  \f0 provides\f3  \f0 a\f3  \f0 numpy\f3  \f0 empty\f3  \f0 array\f3  \f0 function\f3 . \f0 It\f3  \f0 is\f3  \f0 used\f3  \f0 to\f3  \f0 create\f3  \f0 an\f3  \f0 empty\f3  \f0 array\f3  \f0 as\f3  \f0 per\f3  \f0 user\f3  \f0 condition\f3  \f0 means\f3  \f0 given\f3  \f0 data\f3  \f0 type\f3  \f0 and\f3  \f0 shape\f3  \f0 of\f3  \f0 the\f3  \f0 array\f3  \f0 without\f3  \f0 initializing\f3  \f0 values\f3 .\f0\par
+It\f3  \f0 allows\f3  \f0 only\f3  \f0 shape\f3  \f0 and\f3  \f0 data\f3  \f0 type\f3  \f0 as\f3  \f0 arguments\f3 . \f0 If\f3  \f0 the\f3  \f0 datatype\f3  \f0 parameter\f3  \f0 is\f3  \f0 not\f3  \f0 provided\f3  \f0 then\f3  \f0 the\f3  \f0 default\f3  \f0 data\f3  \f0 type\f3  \f0 of\f3  \f0 all\f3  \f0 Values\f3  \f0 in\f3  \f0 the\f3  \f0 returned\f3  \f0 array\f3  \f0 will\f3  \f0 be\f3  \f0 float\f3 .\f0\par
+Syntax\f3 :\f0\par
+Here\f3  \f0 is\f3  \f0 the\f3  \f0 Syntax\f3  \f0 of\f3  \f0 numpy\f3 .\f0 empty\f3 ()\par
+\cf1 numpy.empty\par
+           (\par
+            shape,\par
+            dtype=float,\par
+            order='C'\par
+           )\par
+\cf3 It Consists of few parameters.\par
+Shape: Shape of the empty array, e.g:(4,3)\par
+dtype: its an optional parameter by default value is float.\par
+order: Whether to store multi-dimensional numpy array data in row and column-wise.\par
+\cf1 Example:\par
+\cf3 Let\rquote s take an example to check how to implement a numpy empty array\par
+Basically there are two ways to check numpy empty array.\par
+Using numpy empty array function.\par
+Using numpy zero\rquote s array function\par
+\f0\par
+\cf0\par
+}
+ 
